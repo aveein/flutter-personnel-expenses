@@ -17,50 +17,42 @@ class TransactionList extends StatelessWidget {
                 Text(
                   'No Transaction yet!',
                   style: Theme.of(context).textTheme.title,
-                 
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                 Container(height: 200,child: Image.asset('android/assets/images/waiting.png',fit: BoxFit.cover,))
+                Container(
+                    height: 200,
+                    child: Image.asset(
+                      'android/assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    ))
               ],
             )
           : ListView.builder(
               itemBuilder: (ctx, index) {
                 return Card(
-                  child: Row(
-                    children: [
-                      Container(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                          color: Theme.of(context).primaryColor,
-                          width: 2,
-                        )),
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          '\$${_userTransactions[index].amount.toStringAsFixed(2)}', //string intrepretor syntax
-                          style: Theme.of(context).textTheme.title,
-                        ),
+                  elevation: 5,
+                  margin: EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 5,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: FittedBox(
+                            child:
+                                Text('\$${_userTransactions[index].amount}')),
                       ),
-                      Expanded(
-                        flex: 5,
-                        child: Text(
-                          _userTransactions[index].title,
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: Text(
-                          DateFormat.yMMMd()
-                              .format(_userTransactions[index].date),
-                          style: TextStyle(fontSize: 15, color: Colors.grey),
-                        ),
-                      )
-                    ],
+                    ),
+                    title: Text(
+                      _userTransactions[index].title,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    subtitle: Text(DateFormat.yMMMd()
+                        .format(_userTransactions[index].date)),
                   ),
                 );
               },
