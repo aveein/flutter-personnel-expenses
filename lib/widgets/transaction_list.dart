@@ -4,8 +4,8 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> _userTransactions;
-
-  TransactionList(this._userTransactions);
+  final Function _deleteTransaction;
+  TransactionList(this._userTransactions,this._deleteTransaction);
 
   @override
   Widget build(BuildContext context) {
@@ -38,22 +38,26 @@ class TransactionList extends StatelessWidget {
                     horizontal: 5,
                   ),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: FittedBox(
-                            child:
-                                Text('\$${_userTransactions[index].amount}')),
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: FittedBox(
+                              child:
+                                  Text('\$${_userTransactions[index].amount}')),
+                        ),
                       ),
-                    ),
-                    title: Text(
-                      _userTransactions[index].title,
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                    subtitle: Text(DateFormat.yMMMd()
-                        .format(_userTransactions[index].date)),
-                  ),
+                      title: Text(
+                        _userTransactions[index].title,
+                        style: Theme.of(context).textTheme.title,
+                      ),
+                      subtitle: Text(DateFormat.yMMMd()
+                          .format(_userTransactions[index].date)),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        color: Theme.of(context).errorColor,
+                        onPressed: () => _deleteTransaction(_userTransactions[index].id),
+                      )),
                 );
               },
               itemCount: _userTransactions.length,
